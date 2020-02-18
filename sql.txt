@@ -1,0 +1,265 @@
+
+Book Name : 
+Beginning Oracle SQL For Oracle Database 12c
+
+Github Address :
+https://github.com/Apress/beg-oracle-sql-3ed/tree/master/Beginning%20Oracle%20SQL%2C%203rd%20Edition
+
+
+Create User ====================================
+
+create user book
+default   tablespace users
+temporary tablespace temp
+identified by book;
+
+
+
+grant create session, alter session,
+      unlimited tablespace,
+      create table, create view,
+      create materialized view,
+      create procedure,
+      create sequence,
+      create synonym,
+      create trigger,
+      create type
+to    book;
+grant execute on dbms_lock to book;
+
+
+
+Dual :
+select 123 * 456 from dual;
+
+
+Case :
+4-30-----------------------------
+select attendee, begindate
+,      case evaluation
+            when 1 then 'bad'
+            when 2 then 'mediocre'
+            when 3 then 'ok'
+            when 4 then 'good'
+            when 5 then 'excellent'
+                   else 'not filled in'
+       end
+from   registrations
+where  course = 'SQL';
+
+
+4-31-----------------------------
+select ename, job
+,      case when job   = 'TRAINER' then '  10%'
+            when job   = 'MANAGER' then '  20%'
+            when ename = 'SMITH'   then '  30%'
+                                   else '   0%'
+       end  as raise
+from   employees
+order  by raise desc, ename;
+
+
+subquery :
+4-34-----------------------------
+
+select attendee
+from   registrations
+where  course in
+      (select course, begindate
+       from   offerings
+       where  location = 'CHICAGO');
+       
+       
+4-36-----------------------------
+select ename, init, bdate
+from   employees
+where  bdate > (select bdate
+                from   employees
+                where  empno = 7876);     
+       
+       
+       
+4-38-----------------------------
+select ename, init, bdate
+from   employees
+where  bdate > (select bdate
+                from   employees
+                where  ename = 'JONES');     
+
+此SQL error 需加 Any | ALL
+
+
+5-9-----------------------------
+substr instr
+
+select dname
+,      substr(dname,4)      as substr1
+,      substr(dname,4,3)    as substr2
+,      instr(dname,'I')     as instr1
+,      instr(dname,'I',5)   as instr2
+,      instr(dname,'I',3,2) as instr3
+from   departments;
+
+
+5-13-----------------------------
+select translate('beer bucket','beer','milk') as translate
+,      replace  ('beer bucket','beer','milk') as replace_1
+,      replace  ('beer bucket','beer')        as replace_2
+from   dual;
+
+
+5-18 extract *******
+select bdate
+,      extract(year  from bdate) as year_of_birth
+,      extract(month from bdate) as month_of_birth
+,      extract(day   from bdate) as day_of_birth
+from   employees
+where  ename = 'KING';
+
+
+5-23 nvl-----------------------------
+select ename, msal, comm
+,      12*msal+nvl(comm,0) as yearsal
+from   employees
+where  ename like '%T%';
+
+
+5-24 decode-----------------------------
+select job, ename
+,      decode(greatest(msal,2500)
+             ,2500,'cheap','expensive') as class
+from   employees
+where  bdate <date '1964-01-01'
+order  by decode(job,'DIRECTOR',1,'MANAGER',2,3);
+
+
+
+6-4 SubQuery in Update-----------------------------
+update employees            -- Example 1
+set    job    = 'SALESREP'
+,      msal   = msal - 500
+,      comm   = 0
+,      deptno = 30
+where  empno  = 7876;
+
+rollback;
+
+UPDATE employees       -- Example 2
+SET deptno = (SELECT deptno
+              FROM   departments
+              WHERE  location = 'BOSTON')
+WHERE empno = 7900;
+
+rollback;
+
+UPDATE employees       -- Example 3
+SET (deptno,mgr) = (SELECT deptno,mgr
+                    FROM   departments
+                    WHERE  location = 'BOSTON')
+WHERE empno = 7900;
+
+
+
+6-5 subquery in Update-----------------------------
+UPDATE employees e      -- Example 2
+SET e.msal = e.msal * 1.1
+WHERE e.deptno IN (SELECT d.deptno
+                   FROM   departments d
+                   WHERE  d.location = 'DALLAS'
+                   );
+
+
+
+6-8 6-9 subquery in Delete-----------------------------
+DELETE FROM dept_emp_names
+  WHERE deptname = (SELECT dname
+                    FROM departments
+                    WHERE location = 'DALLAS');
+  
+DELETE FROM employees
+WHERE deptno IN (SELECT deptno
+                 FROM   departments
+                 WHERE  location = 'NEW YORK')
+
+
+
+Table 7-2 ------------------
+Number 38 digits
+Char 2000b
+Varchar 4000b
+Varchar2 4000b or 32,767bs
+RAW 2000b or 32,767bs
+BLOB
+CLOB
+
+
+7-14 Index ***********
+create index year_sal_idx
+on employees (12*msal + coalesce(comm,0));
+
+
+
+8-12 outer join-----------------------------
+select d.deptno, d.location
+,      e.ename, e.init
+from   employees e, departments d
+where  e.deptno(+) = d.deptno
+order  by d.deptno, e.ename;
+
+
+8-13 outer join-----------------------------
+select deptno, d.location
+,      e.ename, e.init
+from   employees e
+       right outer join
+       departments d
+       using (deptno)
+order  by deptno, e.ename;
+
+
+
+8-26 Having-----------------------------
+select deptno, count(empno)
+from   employees
+group  by deptno
+having count(*) >= 4;
+
+
+8-37 group by rollup-----------------------------
+select   deptno, job
+,        count(empno) headcount
+from     employees
+group by ROLLUP(deptno, job);
+
+
+8-38 group by cube-----------------------------
+select   deptno, job
+,        count(empno) headcount
+from     employees
+group by CUBE(deptno, job);
+
+8-39 grouping-----------------------------
+select   deptno
+,        case grouping(job)
+              when 0 then job
+              when 1 then '**total**'
+         end  job
+,        count(empno) headcount
+from     employees
+group by ROLLUP(deptno, job);
+
+8-42 partion outer join
+select d.dname as department
+,      e.job   as job
+,      e.ename as employee
+from   employees e
+       right outer join
+       departments d
+       using (deptno)
+order  by department, job;
+
+
+
+
+
+
