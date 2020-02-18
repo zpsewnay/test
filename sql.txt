@@ -29,6 +29,24 @@ grant execute on dbms_lock to book;
 
 
 
+Date Column operation -------------------
+
+CREATE TABLE test.DateTest (
+  ID VARCHAR(25) PRIMARY KEY,
+  insertDate Date
+);
+
+insert into datetest(ID, insertDate) values('1', to_date('2004-05-07 13:23:44','yyyy-mm-dd hh24:mi:ss'));
+
+update datetest
+set insertDate = to_date('2004-05-07 13:23:44','yyyy-mm-dd hh24:mi:ss')
+where ID = '1'
+
+select id, to_char(insertDate,'yyyy-mm-dd hh24:mi:ss') as nowTime from datetest;
+
+
+
+
 Dual :
 select 123 * 456 from dual;
 
