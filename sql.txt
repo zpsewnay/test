@@ -1,4 +1,14 @@
 
+員工基本資料查詢
+
+姓名 (用Like方式查詢)
+姓別 男生 女生
+興趣 室內活動 戶外活動
+學歷 大學 碩士 博士 高中
+
+
+
+
 Book Name : 
 Beginning Oracle SQL For Oracle Database 12c
 
