@@ -1,0 +1,353 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <style>
+  
+  
+
+
+table.cinereousTable {
+  border: 6px solid #948473;
+  background-color: #FFE3C6;
+  width: 100%;
+  text-align: left;
+}
+table.cinereousTable td, table.cinereousTable th {
+  border: 3px solid #948473;
+  padding: 4px 4px;
+}
+table.cinereousTable tbody td {
+  font-size: 16px;
+}
+table.cinereousTable thead {
+  background: #555555;
+  background: -moz-linear-gradient(top, #afa396 0%, #9e9081 66%, #948473 100%);
+  background: -webkit-linear-gradient(top, #afa396 0%, #9e9081 66%, #948473 100%);
+  background: linear-gradient(to bottom, #afa396 0%, #9e9081 66%, #948473 100%);
+}
+table.cinereousTable thead th {
+  font-size: 50px;
+  font-weight: bold;
+  color: white;
+  text-align: left;
+  border-left: 2px solid #948473;
+}
+table.cinereousTable thead th:first-child {
+  border-left: none;
+}
+
+table.cinereousTable tfoot {
+  font-size: 16px;
+  font-weight: bold;
+  color: #F0F0F0;
+  background: #948473;
+  background: -moz-linear-gradient(top, #afa396 0%, #9e9081 66%, #948473 100%);
+  background: -webkit-linear-gradient(top, #afa396 0%, #9e9081 66%, #948473 100%);
+  background: linear-gradient(to bottom, #afa396 0%, #9e9081 66%, #948473 100%);
+}
+table.cinereousTable tfoot td {
+  font-size: 16px;
+}
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  </style>
+  
+  <title>DB物件及資料變更申請作業</title>
+
+  
+  
+  
+<!--  
+  <link rel="stylesheet" src='./jquery-ui-themes-1.12.1/jquery-ui.structure.css'>
+  <link rel="stylesheet" src='./jquery-ui-themes-1.12.1/jquery-ui.theme.css'>  
+  <script type='text/javascript' src='./jquery-1.12.4.js'></script>    
+  <script type='text/javascript' src='./jquery-ui-1.12.1/jquery-ui.js'></script>  
+-->
+
+	<link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
+<!--  
+	
+  <script type='text/javascript' src='./jquery-1.12.4.js'></script>    
+  <script type='text/javascript' src='./jquery-ui-1.12.1/jquery-ui.js'></script>  
+	
+-->
+	<script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+	<script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  
+  
+  <script>
+  
+  $( function() {
+    $( "#tabs" ).tabs();
+    $( "#tabs2" ).tabs();	
+	$( "#constant_date" ).datepicker();
+	$( "#emergency_date" ).datepicker();
+  } );  
+  
+  
+  
+  
+  </script>
+</head>
+
+<body>
+
+		<center><h1>DB物件及資料變更申請作業</h1></center>
+
+		<br/></br>
+		<button class="ui-button ui-widget ui-corner-all">　　建立新申請　　</button>
+		</br></br></br>
+
+		<div id="tabs">
+			<ul>
+				<li><a href="#tabs-1">DB Review Team待處理申請 :</a></li>
+				<li><a href="#tabs2-1">個人申請記錄 :</a></li>
+			</ul>
+					
+			<div id="tabs-1">		
+			
+				<Br/><Br/>
+				<TABLE BORDER="1" class="cinereousTable">
+					<tbody>
+						<TR>
+							<TD>
+							人員名稱
+							</TD>
+							<TD><input type="text" id="applyName" name="applyName" value ="C.C.Sun"></TD>
+												
+							<TD rowspan='4'>
+							<button class="ui-button ui-widget ui-corner-all">查詢</button>
+							</TD>
+
+						</TR>
+
+						<TR>
+							<TD>
+							申請起日
+							</TD>
+							<TD>
+							<input type="text" id="applyName" name="applyName" value ="2020-07-01">
+							</TD>
+						</TR>
+						
+						
+						<TR>
+							<TD>
+							申請迄日
+							</TD>
+							<TD>
+							<input type="text" id="applyName" name="applyName" value ="2020-07-30">
+							</TD>
+						</TR>
+						
+						
+						<TR>
+							<TD>
+							處理狀態
+							</TD>
+							<TD>
+								<select name="cars" id="cars">
+								  <option value="volvo">暫存件</option>
+								  <option value="volvo">通過檢測，但有需人員確認項目</option>
+								  <option value="saab">通過檢測</option>
+								  <option value="saab">已處理</option>
+								  <option value="saab">退件</option>
+								</select>					
+							</TD>
+						</TR>				
+					</tbody>	
+				</TABLE>
+
+
+				<BR/>
+				<BR/>
+				<TABLE BORDER="1" class="cinereousTable">
+				
+  					<thead>
+						<TR>
+							<TD style="color:white;">項次</TD>
+							<TD style="color:white;">申請人員</TD>
+							<TD style="color:white;">申請日期</TD>
+							<TD style="color:white;">作業內容</TD>
+							<TD style="color:white;">處理狀態</TD>
+							<TD style="color:white;">DB Review Team註記</TD>				
+							<TD style="color:white;">處理日期</TD>							
+						</TR>
+  					</thead>				
+				
+					<tbody>
+						<TR>
+							<TD>1</TD>
+							<TD>C.C.Sun</TD>
+							<TD>2020-07-26</TD>
+							<TD><a href="#">新建Table及Sequence</a></TD>
+							<TD>通過檢測，但有需人員確認項目</TD>
+							<TD></TD>
+							<TD></TD>
+						</TR>
+						
+						<TR>
+							<TD>2</TD>
+							<TD>C.C.Sun</TD>
+							<TD>2020-07-26</TD>
+							<TD>新增Column</TD>
+							<TD>通過檢測</TD>
+							<TD></TD>
+							<TD></TD>
+						</TR>
+
+					</tbody>					
+				</TABLE>
+		</div>
+		
+			<div id="tabs2-1">	
+			
+				<Br/><Br/>
+				<TABLE BORDER="1" class="cinereousTable">
+				
+					<TR>
+						<TD>
+						人員名稱
+						</TD>
+						<TD><input type="text" id="applyName" name="applyName" value ="C.C.Sun"></TD>
+											
+						<TD rowspan='4'>
+						<button class="ui-button ui-widget ui-corner-all">查詢</button>
+						</TD>
+
+					</TR>
+
+					<TR>
+						<TD>
+						申請起日
+						</TD>
+						<TD>
+						<input type="text" id="applyName" name="applyName" value ="2020-07-01">
+						</TD>
+					</TR>
+					
+					
+					<TR>
+						<TD>
+						申請迄日
+						</TD>
+						<TD>
+						<input type="text" id="applyName" name="applyName" value ="2020-07-30">
+						</TD>
+					</TR>
+					
+					
+					<TR>
+						<TD>
+						處理狀態
+						</TD>
+						<TD>
+							<select name="cars" id="cars">
+							  <option value="volvo">暫存件</option>
+							  <option value="volvo">通過檢測，但有需人員確認項目</option>
+							  <option value="saab">通過檢測</option>
+							  <option value="saab">已處理</option>
+							  <option value="saab">退件</option>
+							</select>					
+						</TD>
+					</TR>				
+								
+				</TABLE>		
+				
+				
+				<BR/>
+				<BR/>
+				<TABLE BORDER="1" class="cinereousTable">
+				
+  					<thead>
+						<TR>
+							<TD style="color:white;">項次</TD>
+							<TD style="color:white;">申請人員</TD>
+							<TD style="color:white;">申請日期</TD>
+							<TD style="color:white;">作業內容</TD>
+							<TD style="color:white;">處理狀態</TD>
+							<TD style="color:white;">DB Review Team註記</TD>				
+							<TD style="color:white;">處理日期</TD>				
+						</TR>
+  					</thead>
+
+					<TR>
+						<TD>1</TD>
+						<TD>C.C.Sun</TD>
+						<TD>2020-07-26</TD>
+						<TD>新建Table及Sequence</TD>
+						<TD>暫存件</TD>
+						<TD></TD>
+						<TD></TD>
+					</TR>
+					
+					<TR>
+						<TD>2</TD>
+						<TD>C.C.Sun</TD>
+						<TD>2020-07-26</TD>
+						<TD>新增Column</TD>
+						<TD>通過檢測，但有需人員確認項目</TD>
+						<TD></TD>
+						<TD></TD>
+					</TR>
+
+
+					<TR>
+						<TD>3</TD>
+						<TD>C.C.Sun</TD>
+						<TD>2020-07-26</TD>
+						<TD>功能廢除，申請刪除Table</TD>
+						<TD>通過檢測</TD>
+						<TD></TD>
+						<TD></TD>
+					</TR>										
+					
+					
+					<TR>
+						<TD>4</TD>
+						<TD>C.C.Sun</TD>
+						<TD>2020-07-26</TD>
+						<TD>功能廢除，申請刪除Table</TD>
+						<TD>已處理</TD>
+						<TD>TABLE已移除</TD>
+						<TD>2020-08-01</TD>
+					</TR>										
+					
+					
+					<TR>
+						<TD>3</TD>
+						<TD>C.C.Sun</TD>
+						<TD>2020-07-26</TD>
+						<TD>功能廢除，申請刪除Table</TD>
+						<TD style="color:red;">退件</TD>
+						<TD>功能名稱錯誤，請確認，再提變更</TD>
+						<TD>2020-08-01</TD>
+					</TR>										
+					
+					
+				</TABLE>		
+			</div>		
+		
+		
+		</div>
+		<br/><hr/><br/>
+		
+		
+		
+		
+
+</body>
+</html>
