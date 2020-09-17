@@ -1,0 +1,11 @@
+
+
+--新增電文
+Insert into DIC (TYPE, VALUE, KEY, INDEX_NO, LOCALE, RESERVE1) Values ('SERVICE','查詢一年內特定活動及其揪團','csCmpgnTeamActvtyInq','465','zh_TW',null);
+Insert into DIC (TYPE, VALUE, KEY, INDEX_NO, LOCALE, RESERVE1) Values ('SERVICE','建立揪團電文','csCmpgnInitTeamAdd','466','zh_TW',null);
+Insert into DIC (TYPE, VALUE, KEY, INDEX_NO, LOCALE, RESERVE1) Values ('SERVICE','加入揪團成員','csCmpgnJoinTeamAdd','467','zh_TW',null);
+Insert into DIC (TYPE, VALUE, KEY, INDEX_NO, LOCALE, RESERVE1) Values ('SERVICE','查詢揪團成員','csCmpgnTeamMmbInq','468','zh_TW',null);
+
+
+Insert into ESB_SERVICE_SETTING (TRN_CODE,SERVICE_NAME,SERVICE_VERSION,TIMEOUT,ACCESSIBLE,LOGFIELDS,SUCCESS_CODES,EFFECTIVE_DATE,OTP_RESULT_CMS_KEY,ERROR_CATEGORY,CHANNEL_ID) 
+values ('cardot007','csCmpgnTeamActvtyInq','01',60000,'Y',null,'0000',null,null,'QUERY',null);
