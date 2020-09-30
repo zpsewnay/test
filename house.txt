@@ -1,0 +1,1087 @@
+SET SERVEROUTPUT ON
+SET HEAD OFF
+
+SPOOL ./log/del_his_data_daily.log
+select '#### Timestamp: '|| to_char(sysdate,'YYYY-MM-DD HH:MI:SS') from dual;
+select '#### Begin Running del_his_data_daily.sql' from dual;
+
+--######################################################################
+--# INEB_DEVICE_BIND_LOG (Keep 5 years)
+--######################################################################
+select '################################################################' from dual;
+select '>>>> Timestamp: '|| to_char(sysdate,'YYYY-MM-DD HH:MI:SS') from dual;
+select '>>>> Delete Table: INEB_DEVICE_BIND_LOG' from dual;
+
+DECLARE
+	v_COMMIT INT := 10000;
+        v_TOTAL INT := 0;
+BEGIN
+        LOOP
+	delete from INEB_DEVICE_BIND_LOG
+	where CREATE_TIME < add_months(sysdate, -60)
+        and rownum <= v_COMMIT;
+
+        v_TOTAL := v_TOTAL + SQL%rowcount;
+        dbms_output.put_line( trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted...') ;
+
+        EXIT WHEN SQL%rowcount < v_COMMIT;
+        commit;
+        END LOOP;
+        commit;
+    dbms_output.put_line( 'INEB_DEVICE_BIND_LOG: TOTAL ' || trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted!') ;
+END;
+/
+
+--######################################################################
+--# INEB_AUTH_DEVICE_OTP_LOG (Keep 24 months)
+--######################################################################
+select '################################################################' from dual;
+select '>>>> Timestamp: '|| to_char(sysdate,'YYYY-MM-DD HH:MI:SS') from dual;
+select '>>>> Delete Table: INEB_AUTH_DEVICE_OTP_LOG' from dual;
+
+DECLARE
+	v_COMMIT INT := 10000;
+        v_TOTAL INT := 0;
+BEGIN
+        LOOP
+	delete from INEB_AUTH_DEVICE_OTP_LOG
+	where TRN_TIME < add_months(sysdate, -24)
+        and rownum <= v_COMMIT;
+
+        v_TOTAL := v_TOTAL + SQL%rowcount;
+        dbms_output.put_line( trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted...') ;
+
+        EXIT WHEN SQL%rowcount < v_COMMIT;
+        commit;
+        END LOOP;
+        commit;
+    dbms_output.put_line( 'INEB_AUTH_DEVICE_OTP_LOG: TOTAL ' || trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted!') ;
+END;
+/
+
+--######################################################################
+--# MB_PN_MESSAGE (Keep 3 months)
+--######################################################################
+select '################################################################' from dual;
+select '>>>> Timestamp: '|| to_char(sysdate,'YYYY-MM-DD HH:MI:SS') from dual;
+select '>>>> Delete Table: MB_PN_MESSAGE' from dual;
+
+DECLARE
+	v_COMMIT INT := 100000;
+        v_TOTAL INT := 0;
+BEGIN
+        LOOP
+	delete from MB_PN_MESSAGE
+	where MESSAGE_DATE < add_months(sysdate, -3)
+        and rownum <= v_COMMIT;
+
+        v_TOTAL := v_TOTAL + SQL%rowcount;
+        dbms_output.put_line( trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted...') ;
+
+        EXIT WHEN SQL%rowcount < v_COMMIT;
+        commit;
+        END LOOP;
+        commit;
+    dbms_output.put_line( 'MB_PN_MESSAGE: TOTAL ' || trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted!') ;
+END;
+/
+
+--######################################################################
+--# IB_PN_MESSAGE (Keep 3 months)
+--######################################################################
+select '################################################################' from dual;
+select '>>>> Timestamp: '|| to_char(sysdate,'YYYY-MM-DD HH:MI:SS') from dual;
+select '>>>> Delete Table: IB_PN_MESSAGE' from dual;
+
+DECLARE
+        v_COMMIT INT := 100000;
+        v_TOTAL INT := 0;
+BEGIN
+        LOOP
+        delete from IB_PN_MESSAGE
+        where MESSAGE_DATE < add_months(sysdate, -3)
+        and rownum <= v_COMMIT;
+
+        v_TOTAL := v_TOTAL + SQL%rowcount;
+        dbms_output.put_line( trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted...') ;
+
+        EXIT WHEN SQL%rowcount < v_COMMIT;
+        commit;
+        END LOOP;
+        commit;
+    dbms_output.put_line( 'IB_PN_MESSAGE: TOTAL ' || trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted!') ;
+END;
+/
+
+--######################################################################
+--# TRANSACTIONLOG (Keep 3 months)
+--######################################################################
+select '################################################################' from dual;
+select '>>>> Timestamp: '|| to_char(sysdate,'YYYY-MM-DD HH:MI:SS') from dual;
+select '>>>> Delete Table: TRANSACTIONLOG' from dual;
+
+DECLARE
+	v_COMMIT INT := 10000;
+        v_TOTAL INT := 0;
+BEGIN
+        LOOP
+	delete from TRANSACTIONLOG
+	where TRN_DATE < add_months(sysdate, -3)
+        and rownum <= v_COMMIT;
+
+        v_TOTAL := v_TOTAL + SQL%rowcount;
+        dbms_output.put_line( trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted...') ;
+
+        EXIT WHEN SQL%rowcount < v_COMMIT;
+        commit;
+        END LOOP;
+        commit;
+    dbms_output.put_line( 'TRANSACTIONLOG: TOTAL ' || trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted!') ;
+END;
+/
+
+
+--######################################################################
+--# CTCB_BILLHUNTER_MAIL (Keep 3 months)
+--######################################################################
+select '################################################################' from dual;
+select '>>>> Timestamp: '|| to_char(sysdate,'YYYY-MM-DD HH:MI:SS') from dual;
+select '>>>> Delete Table: CTCB_BILLHUNTER_MAIL' from dual;
+
+DECLARE
+        v_COMMIT INT := 100000;
+        v_TOTAL INT := 0;
+BEGIN
+        LOOP
+        delete from CTCB_BILLHUNTER_MAIL
+        where LAST_MOD_TIME < add_months(sysdate, -3)
+        and rownum <= v_COMMIT;
+
+        v_TOTAL := v_TOTAL + SQL%rowcount;
+        dbms_output.put_line( trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted...') ;
+
+        EXIT WHEN SQL%rowcount < v_COMMIT;
+        commit;
+        END LOOP;
+        commit;
+    dbms_output.put_line( 'CTCB_BILLHUNTER_MAIL: TOTAL ' || trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted!') ;
+END;
+/
+
+
+--######################################################################
+--# INEB_EFUND_HITS (Keep 3 months)
+--######################################################################
+select '################################################################' from dual;
+select '>>>> Timestamp: '|| to_char(sysdate,'YYYY-MM-DD HH:MI:SS') from dual;
+select '>>>> Delete Table: INEB_EFUND_HITS' from dual;
+
+DECLARE
+        v_COMMIT INT := 10000;
+        v_TOTAL INT := 0;
+BEGIN
+        LOOP
+        delete from INEB_EFUND_HITS
+        where HIT_DATE < add_months(sysdate, -3)
+        and rownum <= v_COMMIT;
+
+        v_TOTAL := v_TOTAL + SQL%rowcount;
+        dbms_output.put_line( trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted...') ;
+
+        EXIT WHEN SQL%rowcount < v_COMMIT;
+        commit;
+        END LOOP;
+        commit;
+    dbms_output.put_line( 'INEB_EFUND_HITS: TOTAL ' || trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted!') ;
+END;
+/
+
+
+--######################################################################
+--# INEB_PRIZE_SERIALKEY (Keep 18 months)
+--######################################################################
+select '################################################################' from dual;
+select '>>>> Timestamp: '|| to_char(sysdate,'YYYY-MM-DD HH:MI:SS') from dual;
+select '>>>> Delete Table: INEB_PRIZE_SERIALKEY' from dual;
+
+DECLARE
+        v_COMMIT INT := 10000;
+        v_TOTAL INT := 0;
+BEGIN
+        LOOP
+        delete from INEB_PRIZE_SERIALKEY
+        where CREATE_DATE < add_months(sysdate, -18)
+        and rownum <= v_COMMIT;
+
+        v_TOTAL := v_TOTAL + SQL%rowcount;
+        dbms_output.put_line( trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted...') ;
+
+        EXIT WHEN SQL%rowcount < v_COMMIT;
+        commit;
+        END LOOP;
+        commit;
+    dbms_output.put_line( 'INEB_PRIZE_SERIALKEY: TOTAL ' || trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted!') ;
+END;
+/
+
+--######################################################################
+--# INEB_PRIZE_DRAWREC (Keep ACT_ID within 18 months)
+--######################################################################
+select '################################################################' from dual;
+select '>>>> Timestamp: '|| to_char(sysdate,'YYYY-MM-DD HH:MI:SS') from dual;
+select '>>>> Delete Table: INEB_PRIZE_DRAWREC' from dual;
+
+DECLARE
+        v_COMMIT INT := 10000;
+        v_TOTAL INT := 0;
+BEGIN
+        LOOP
+        delete from INEB_PRIZE_DRAWREC
+        where ACT_ID in (select ACT_ID from INEB_ACTIVITIES_SETTING where OFFLINEDATE < add_months(sysdate, -18))
+        and rownum <= v_COMMIT;
+
+        v_TOTAL := v_TOTAL + SQL%rowcount;
+        dbms_output.put_line( trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted...') ;
+
+        EXIT WHEN SQL%rowcount < v_COMMIT;
+        commit;
+        END LOOP;
+        commit;
+    dbms_output.put_line( 'INEB_PRIZE_DRAWREC: TOTAL ' || trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted!') ;
+END;
+/
+
+--######################################################################
+--# INEB_PRIZE (Keep ACT_ID within 18 months)
+--######################################################################
+select '################################################################' from dual;
+select '>>>> Timestamp: '|| to_char(sysdate,'YYYY-MM-DD HH:MI:SS') from dual;
+select '>>>> Delete Table: INEB_PRIZE' from dual;
+
+DECLARE
+        v_COMMIT INT := 10000;
+        v_TOTAL INT := 0;
+BEGIN
+        LOOP
+        delete from INEB_PRIZE
+        where ACT_ID in (select ACT_ID from INEB_ACTIVITIES_SETTING where OFFLINEDATE < add_months(sysdate, -18))
+        and rownum <= v_COMMIT;
+
+        v_TOTAL := v_TOTAL + SQL%rowcount;
+        dbms_output.put_line( trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted...') ;
+
+        EXIT WHEN SQL%rowcount < v_COMMIT;
+        commit;
+        END LOOP;
+        commit;
+    dbms_output.put_line( 'INEB_PRIZE: TOTAL ' || trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted!') ;
+END;
+/
+
+--######################################################################
+--# INEB_ACTIVITIES_RECORD (Keep 18 months)
+--######################################################################
+select '################################################################' from dual;
+select '>>>> Timestamp: '|| to_char(sysdate,'YYYY-MM-DD HH:MI:SS') from dual;
+select '>>>> Delete Table: INEB_ACTIVITIES_RECORD' from dual;
+
+DECLARE
+        v_COMMIT INT := 10000;
+        v_TOTAL INT := 0;
+BEGIN
+        LOOP
+        delete from INEB_ACTIVITIES_RECORD
+        where ACT_ID in (select ACT_ID from INEB_ACTIVITIES_SETTING where OFFLINEDATE < add_months(sysdate, -18))
+        and ACT_DATE < add_months(sysdate, -18)
+        and rownum <= v_COMMIT;
+
+        v_TOTAL := v_TOTAL + SQL%rowcount;
+        dbms_output.put_line( trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted...') ;
+
+        EXIT WHEN SQL%rowcount < v_COMMIT;
+        commit;
+        END LOOP;
+        commit;
+    dbms_output.put_line( 'INEB_ACTIVITIES_RECORD: TOTAL ' || trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted!') ;
+END;
+/
+
+
+--######################################################################
+--# GIFT_SERIAL_KEY (Keep 18 months)
+--######################################################################
+select '################################################################' from dual;
+select '>>>> Timestamp: '|| to_char(sysdate,'YYYY-MM-DD HH:MI:SS') from dual;
+select '>>>> Delete Table: GIFT_SERIAL_KEY' from dual;
+
+DECLARE
+        v_COMMIT INT := 10000;
+        v_TOTAL INT := 0;
+BEGIN
+        LOOP
+        delete from GIFT_SERIAL_KEY
+        where UPDATE_DATE < add_months(sysdate, -18)
+        and rownum <= v_COMMIT;
+
+        v_TOTAL := v_TOTAL + SQL%rowcount;
+        dbms_output.put_line( trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted...') ;
+
+        EXIT WHEN SQL%rowcount < v_COMMIT;
+        commit;
+        END LOOP;
+        commit;
+    dbms_output.put_line( 'GIFT_SERIAL_KEY: TOTAL ' || trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted!') ;
+END;
+/
+
+
+--######################################################################
+--# GIFT_SERIAL_KEY_DRAWREC (Keep LAYOUT within 18 months)
+--######################################################################
+select '################################################################' from dual;
+select '>>>> Timestamp: '|| to_char(sysdate,'YYYY-MM-DD HH:MI:SS') from dual;
+select '>>>> Delete Table: GIFT_SERIAL_KEY_DRAWREC' from dual;
+
+DECLARE
+        v_COMMIT INT := 10000;
+        v_TOTAL INT := 0;
+BEGIN
+        LOOP
+        delete from GIFT_SERIAL_KEY_DRAWREC
+        where LAYOUT in (select LAYOUT from GIFT_ACTIVITIES where OFFLINEDATE < add_months(sysdate, -18))
+        and rownum <= v_COMMIT;
+
+        v_TOTAL := v_TOTAL + SQL%rowcount;
+        dbms_output.put_line( trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted...') ;
+
+        EXIT WHEN SQL%rowcount < v_COMMIT;
+        commit;
+        END LOOP;
+        commit;
+    dbms_output.put_line( 'GIFT_SERIAL_KEY_DRAWREC: TOTAL ' || trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted!') ;
+END;
+/
+
+
+--######################################################################
+--# GIFT (Keep LAYOUT within 18 months)
+--######################################################################
+select '################################################################' from dual;
+select '>>>> Timestamp: '|| to_char(sysdate,'YYYY-MM-DD HH:MI:SS') from dual;
+select '>>>> Delete Table: GIFT' from dual;
+
+DECLARE
+        v_COMMIT INT := 10000;
+        v_TOTAL INT := 0;
+BEGIN
+        LOOP
+        delete from GIFT
+        where LAYOUT in (select LAYOUT from GIFT_ACTIVITIES where OFFLINEDATE < add_months(sysdate, -18))
+        and rownum <= v_COMMIT;
+
+        v_TOTAL := v_TOTAL + SQL%rowcount;
+        dbms_output.put_line( trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted...') ;
+
+        EXIT WHEN SQL%rowcount < v_COMMIT;
+        commit;
+        END LOOP;
+        commit;
+    dbms_output.put_line( 'INEB_PRIZE: TOTAL ' || trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted!') ;
+END;
+/
+
+--######################################################################
+--# GIFT_RECORD (Keep 18 months)
+--######################################################################
+select '################################################################' from dual;
+select '>>>> Timestamp: '|| to_char(sysdate,'YYYY-MM-DD HH:MI:SS') from dual;
+select '>>>> Delete Table: GIFT_RECORD' from dual;
+
+DECLARE
+        v_COMMIT INT := 10000;
+        v_TOTAL INT := 0;
+BEGIN
+        LOOP
+        delete from GIFT_RECORD
+        where LAYOUT in (select LAYOUT from GIFT_ACTIVITIES where OFFLINEDATE < add_months(sysdate, -18))
+        and UPDATE_DATE < add_months(sysdate, -18)
+        and rownum <= v_COMMIT;
+
+        v_TOTAL := v_TOTAL + SQL%rowcount;
+        dbms_output.put_line( trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted...') ;
+
+        EXIT WHEN SQL%rowcount < v_COMMIT;
+        commit;
+        END LOOP;
+        commit;
+    dbms_output.put_line( 'GIFT_RECORD: TOTAL ' || trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted!') ;
+END;
+/
+
+
+--######################################################################
+--# IB_EASY_LOGIN (Keep 12 months)
+--# 清除25小時前初始(00)或逾時(99)狀態的QR Code產生紀錄
+--######################################################################
+select '################################################################' from dual;
+select '>>>> Timestamp: '|| to_char(sysdate,'YYYY-MM-DD HH:MI:SS') from dual;
+select '>>>> Delete Table: IB_EASY_LOGIN' from dual;
+
+DECLARE
+        v_COMMIT INT := 10000;
+        v_TOTAL INT := 0;
+BEGIN
+        LOOP
+        delete from IB_EASY_LOGIN
+        where LAST_UPDATE_TIME < add_months(sysdate, -12)
+	or (CREATE_TIME < SYSTIMESTAMP - interval '25' hour and (STATUS='99' or STATUS='00'))
+        and rownum <= v_COMMIT;
+
+        v_TOTAL := v_TOTAL + SQL%rowcount;
+        dbms_output.put_line( trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted...') ;
+
+        EXIT WHEN SQL%rowcount < v_COMMIT;
+        commit;
+        END LOOP;
+        commit;
+    dbms_output.put_line( 'IB_EASY_LOGIN: TOTAL ' || trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted!') ;
+END;
+/
+
+--######################################################################
+--# MB_CUSTOMER_LOCK_LOG (Keep 3 months)
+--######################################################################
+select '################################################################' from dual;
+select '>>>> Timestamp: '|| to_char(sysdate,'YYYY-MM-DD HH:MI:SS') from dual;
+select '>>>> Delete Table: MB_CUSTOMER_LOCK_LOG' from dual;
+
+DECLARE
+        v_COMMIT INT := 10000;
+        v_TOTAL INT := 0;
+BEGIN
+        LOOP
+        delete from MB_CUSTOMER_LOCK_LOG
+        where MODIFIED_DATE < add_months(sysdate, -3)
+        and rownum <= v_COMMIT;
+
+        v_TOTAL := v_TOTAL + SQL%rowcount;
+        dbms_output.put_line( trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted...') ;
+
+        EXIT WHEN SQL%rowcount < v_COMMIT;
+        commit;
+        END LOOP;
+        commit;
+    dbms_output.put_line( 'MB_CUSTOMER_LOCK_LOG: TOTAL ' || trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted!') ;
+END;
+/
+
+--######################################################################
+--# INEB_IEM_DTL (Keep 60 months)
+--######################################################################
+select '################################################################' from dual;
+select '>>>> Timestamp: '|| to_char(sysdate,'YYYY-MM-DD HH:MI:SS') from dual;
+select '>>>> Delete Table: INEB_IEM_DTL' from dual;
+
+DECLARE
+        v_COMMIT INT := 10000;
+        v_TOTAL INT := 0;
+BEGIN
+        LOOP
+        delete from INEB_IEM_DTL
+        where TRN_DATE < add_months(sysdate, -60)
+        and rownum <= v_COMMIT;
+
+        v_TOTAL := v_TOTAL + SQL%rowcount;
+        dbms_output.put_line( trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted...') ;
+
+        EXIT WHEN SQL%rowcount < v_COMMIT;
+        commit;
+        END LOOP;
+        commit;
+    dbms_output.put_line( 'INEB_IEM_DTL: TOTAL ' || trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted!') ;
+END;
+/
+
+--######################################################################
+--# VERIFY_ERROR_COUNT (Keep 1 day)
+--######################################################################
+select '################################################################' from dual;
+select '>>>> Timestamp: '|| to_char(sysdate,'YYYY-MM-DD HH:MI:SS') from dual;
+select '>>>> Delete Table: VERIFY_ERROR_COUNT' from dual;
+
+DECLARE
+        v_COMMIT INT := 10000;
+        v_TOTAL INT := 0;
+BEGIN
+        LOOP
+        delete from VERIFY_ERROR_COUNT
+        --where LOG_TIME < TO_CHAR(sysdate -1)
+        where LOG_TIME < TO_DATE(TO_CHAR(sysdate,'YYYYMMDD'),'YYYYMMDD')
+        and rownum <= v_COMMIT;
+
+        v_TOTAL := v_TOTAL + SQL%rowcount;
+        dbms_output.put_line( trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted...') ;
+
+        EXIT WHEN SQL%rowcount < v_COMMIT;
+        commit;
+        END LOOP;
+        commit;
+    dbms_output.put_line( 'VERIFY_ERROR_COUNT: TOTAL ' || trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted!') ;
+END;
+/
+
+--######################################################################
+--# ONLINE_PAYMENT_TXN_LOG (Keep 24 months)
+--######################################################################
+select '################################################################' from dual;
+select '>>>> Timestamp: '|| to_char(sysdate,'YYYY-MM-DD HH:MI:SS') from dual;
+select '>>>> Delete Table: ONLINE_PAYMENT_TXN_LOG' from dual;
+
+DECLARE
+        v_COMMIT INT := 10000;
+        v_TOTAL INT := 0;
+BEGIN
+        LOOP
+        delete from ONLINE_PAYMENT_TXN_LOG
+        where TXN_DATE < add_months(sysdate, -24)
+        and rownum <= v_COMMIT;
+
+        v_TOTAL := v_TOTAL + SQL%rowcount;
+        dbms_output.put_line( trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted...') ;
+
+        EXIT WHEN SQL%rowcount < v_COMMIT;
+        commit;
+        END LOOP;
+        commit;
+    dbms_output.put_line( 'ONLINE_PAYMENT_TXN_LOG: TOTAL ' || trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted!') ;
+END;
+/
+
+--######################################################################
+--# CTCB_GENERATED_TOKEN_DATA (Keep 1 day)
+--######################################################################
+select '################################################################' from dual;
+select '>>>> Timestamp: '|| to_char(sysdate,'YYYY-MM-DD HH:MI:SS') from dual;
+select '>>>> Delete Table: CTCB_GENERATED_TOKEN_DATA' from dual;
+
+DECLARE
+        v_COMMIT INT := 10000;
+        v_TOTAL INT := 0;
+BEGIN
+        LOOP
+        delete from CTCB_GENERATED_TOKEN_DATA
+        where CREATEDATE < sysdate -1
+	and rownum <= v_COMMIT;
+
+        v_TOTAL := v_TOTAL + SQL%rowcount;
+        dbms_output.put_line( trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted...') ;
+
+        EXIT WHEN SQL%rowcount < v_COMMIT;
+        commit;
+        END LOOP;
+        commit;
+    dbms_output.put_line( 'CTCB_GENERATED_TOKEN_DATA: TOTAL ' || trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted!') ;
+END;
+/
+
+
+--######################################################################
+--# VERIFY_OTHER_ACCOUNT_RECORD (Keep 3 months)
+--######################################################################
+select '################################################################' from dual;
+select '>>>> Timestamp: '|| to_char(sysdate,'YYYY-MM-DD HH:MI:SS') from dual;
+select '>>>> Delete Table: VERIFY_OTHER_ACCOUNT_RECORD' from dual;
+
+DECLARE
+        v_COMMIT INT := 10000;
+        v_TOTAL INT := 0;
+BEGIN
+        LOOP
+        delete from VERIFY_OTHER_ACCOUNT_RECORD
+        where LOG_TIME < add_months(sysdate, -3)
+        and rownum <= v_COMMIT;
+
+        v_TOTAL := v_TOTAL + SQL%rowcount;
+        dbms_output.put_line( trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted...') ;
+
+        EXIT WHEN SQL%rowcount < v_COMMIT;
+        commit;
+        END LOOP;
+        commit;
+    dbms_output.put_line( 'VERIFY_OTHER_ACCOUNT_RECORD: TOTAL ' || trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted!') ;
+END;
+/
+
+
+--######################################################################
+--# ECOUPON_TEMP_CHANNEL (Keep TEMP_CODE within 24 months)
+--######################################################################
+select '################################################################' from dual;
+select '>>>> Timestamp: '|| to_char(sysdate,'YYYY-MM-DD HH:MI:SS') from dual;
+select '>>>> Delete Table: ECOUPON_TEMP_CHANNEL' from dual;
+
+DECLARE
+        v_COMMIT INT := 10000;
+        v_TOTAL INT := 0;
+BEGIN
+        LOOP
+        delete from ECOUPON_TEMP_CHANNEL
+        where TEMP_CODE in (select TEMP_CODE from ECOUPON_TEMPLATE where UPDATE_DATE < add_months(sysdate, -24))
+        and rownum <= v_COMMIT;
+
+        v_TOTAL := v_TOTAL + SQL%rowcount;
+        dbms_output.put_line( trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted...') ;
+
+        EXIT WHEN SQL%rowcount < v_COMMIT;
+        commit;
+        END LOOP;
+        commit;
+    dbms_output.put_line( 'ECOUPON_TEMP_CHANNEL: TOTAL ' || trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted!') ;
+END;
+/
+
+
+--######################################################################
+--# ECOUPON_EXCHANGE_SETTING (Keep OFFER_CODE within 24 months)
+--######################################################################
+select '################################################################' from dual;
+select '>>>> Timestamp: '|| to_char(sysdate,'YYYY-MM-DD HH:MI:SS') from dual;
+select '>>>> Delete Table: ECOUPON_EXCHANGE_SETTING' from dual;
+
+DECLARE
+        v_COMMIT INT := 10000;
+        v_TOTAL INT := 0;
+BEGIN
+        LOOP
+        delete from ECOUPON_EXCHANGE_SETTING
+        where OFFER_CODE in (select OFFER_CODE from ECOUPON_TEMPLATE where UPDATE_DATE < add_months(sysdate, -24))
+        and rownum <= v_COMMIT;
+
+        v_TOTAL := v_TOTAL + SQL%rowcount;
+        dbms_output.put_line( trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted...') ;
+
+        EXIT WHEN SQL%rowcount < v_COMMIT;
+        commit;
+        END LOOP;
+        commit;
+    dbms_output.put_line( 'ECOUPON_EXCHANGE_SETTING: TOTAL ' || trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted!') ;
+END;
+/
+
+
+--######################################################################
+--# ECOUPON_SUB_TEMPLATE  (Keep 12 Months)
+--######################################################################
+select '################################################################' from dual;
+select '>>>> Timestamp: '|| to_char(sysdate,'YYYY-MM-DD HH:MI:SS') from dual;
+select '>>>> Delete Table: ECOUPON_SUB_TEMPLATE ' from dual;
+
+DECLARE
+        v_COMMIT INT := 10000;
+        v_TOTAL INT := 0;
+BEGIN
+        LOOP
+        delete from ECOUPON_SUB_TEMPLATE
+        where END_DATE < add_months(sysdate, -12)
+        and rownum <= v_COMMIT;
+
+        v_TOTAL := v_TOTAL + SQL%rowcount;
+        dbms_output.put_line( trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted...') ;
+
+        EXIT WHEN SQL%rowcount < v_COMMIT;
+        commit;
+        END LOOP;
+        commit;
+    dbms_output.put_line( 'ECOUPON_SUB_TEMPLATE: TOTAL ' || trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted!') ;
+END;
+/
+
+
+--######################################################################
+--# ECOUPON_SN  (Keep 12 Months)
+--######################################################################
+select '################################################################' from dual;
+select '>>>> Timestamp: '|| to_char(sysdate,'YYYY-MM-DD HH:MI:SS') from dual;
+select '>>>> Delete Table: ECOUPON_SN ' from dual;
+
+DECLARE
+        v_COMMIT INT := 10000;
+        v_TOTAL INT := 0;
+BEGIN
+        LOOP
+        delete from ECOUPON_SN
+        where END_DATE < add_months(sysdate, -12)
+        and rownum <= v_COMMIT;
+
+        v_TOTAL := v_TOTAL + SQL%rowcount;
+        dbms_output.put_line( trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted...') ;
+
+        EXIT WHEN SQL%rowcount < v_COMMIT;
+        commit;
+        END LOOP;
+        commit;
+    dbms_output.put_line( 'ECOUPON_SN: TOTAL ' || trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted!') ;
+END;
+/
+
+
+--######################################################################
+--# ECOUPON_SN_REGISTRY  (Keep 12 Months)
+--######################################################################
+select '################################################################' from dual;
+select '>>>> Timestamp: '|| to_char(sysdate,'YYYY-MM-DD HH:MI:SS') from dual;
+select '>>>> Delete Table: ECOUPON_SN_REGISTRY ' from dual;
+
+DECLARE
+        v_COMMIT INT := 10000;
+        v_TOTAL INT := 0;
+BEGIN
+        LOOP
+        delete from ECOUPON_SN_REGISTRY
+        where END_DATE < add_months(sysdate, -12)
+        and rownum <= v_COMMIT;
+
+        v_TOTAL := v_TOTAL + SQL%rowcount;
+        dbms_output.put_line( trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted...') ;
+
+        EXIT WHEN SQL%rowcount < v_COMMIT;
+        commit;
+        END LOOP;
+        commit;
+    dbms_output.put_line( 'ECOUPON_SN_REGISTRY: TOTAL ' || trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted!') ;
+END;
+/
+
+
+--######################################################################
+--# ECOUPON_TEMPLATE (Keep 24 months)
+--######################################################################
+select '################################################################' from dual;
+select '>>>> Timestamp: '|| to_char(sysdate,'YYYY-MM-DD HH:MI:SS') from dual;
+select '>>>> Delete Table: ECOUPON_TEMPLATE' from dual;
+
+DECLARE
+        v_COMMIT INT := 10000;
+        v_TOTAL INT := 0;
+BEGIN
+        LOOP
+        delete from ECOUPON_TEMPLATE
+        where UPDATE_DATE < add_months(sysdate, -24)
+        and rownum <= v_COMMIT;
+
+        v_TOTAL := v_TOTAL + SQL%rowcount;
+        dbms_output.put_line( trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted...') ;
+
+        EXIT WHEN SQL%rowcount < v_COMMIT;
+        commit;
+        END LOOP;
+        commit;
+    dbms_output.put_line( 'ECOUPON_TEMPLATE: TOTAL ' || trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted!') ;
+END;
+/
+
+
+--######################################################################
+--# HLOAN_DOC_STATUS  (Keep 12 Months)
+--######################################################################
+select '################################################################' from dual;
+select '>>>> Timestamp: '|| to_char(sysdate,'YYYY-MM-DD HH:MI:SS') from dual;
+select '>>>> Delete Table: HLOAN_DOC_STATUS ' from dual;
+
+DECLARE
+        v_COMMIT INT := 10000;
+        v_TOTAL INT := 0;
+BEGIN
+        LOOP
+        delete from HLOAN_DOC_STATUS
+        where UPDATE_TIME < add_months(sysdate, -12)
+        and rownum <= v_COMMIT;
+
+        v_TOTAL := v_TOTAL + SQL%rowcount;
+        dbms_output.put_line( trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted...') ;
+
+        EXIT WHEN SQL%rowcount < v_COMMIT;
+        commit;
+        END LOOP;
+        commit;
+    dbms_output.put_line( 'HLOAN_DOC_STATUS: TOTAL ' || trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted!') ;
+END;
+/
+
+
+--######################################################################
+--# DIGITAL_DISCOUNT_REC  (Keep 24 Months)
+--######################################################################
+select '################################################################' from dual;
+select '>>>> Timestamp: '|| to_char(sysdate,'YYYY-MM-DD HH:MI:SS') from dual;
+select '>>>> Delete Table: DIGITAL_DISCOUNT_REC ' from dual;
+
+DECLARE
+        v_COMMIT INT := 10000;
+        v_TOTAL INT := 0;
+BEGIN
+        LOOP
+        delete from DIGITAL_DISCOUNT_REC
+        where CREATE_DATE < add_months(sysdate, -24)
+        and rownum <= v_COMMIT;
+
+        v_TOTAL := v_TOTAL + SQL%rowcount;
+        dbms_output.put_line( trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted...') ;
+
+        EXIT WHEN SQL%rowcount < v_COMMIT;
+        commit;
+        END LOOP;
+        commit;
+    dbms_output.put_line( 'DIGITAL_DISCOUNT_REC: TOTAL ' || trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted!') ;
+END;
+/
+
+
+--######################################################################
+--# DIGITAL_DEPOSIT_MERCHANT  (Keep 14 Days)
+--######################################################################
+select '################################################################' from dual;
+select '>>>> Timestamp: '|| to_char(sysdate,'YYYY-MM-DD HH:MI:SS') from dual;
+select '>>>> Delete Table: DIGITAL_DEPOSIT_MERCHANT ' from dual;
+
+DECLARE
+        v_COMMIT INT := 10000;
+        v_TOTAL INT := 0;
+BEGIN
+        LOOP
+        delete from DIGITAL_DEPOSIT_MERCHANT
+        where UPDATE_TIME < (sysdate -14)
+        and rownum <= v_COMMIT;
+
+        v_TOTAL := v_TOTAL + SQL%rowcount;
+        dbms_output.put_line( trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted...') ;
+
+        EXIT WHEN SQL%rowcount < v_COMMIT;
+        commit;
+        END LOOP;
+        commit;
+    dbms_output.put_line( 'DIGITAL_DEPOSIT_MERCHANT: TOTAL ' || trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted!') ;
+END;
+/
+
+--######################################################################
+--# DIGITAL_DUP_INFO  (Keep 30 Days)
+--######################################################################
+select '################################################################' from dual;
+select '>>>> Timestamp: '|| to_char(sysdate,'YYYY-MM-DD HH:MI:SS') from dual;
+select '>>>> Delete Table: DIGITAL_DUP_INFO ' from dual;
+
+DECLARE
+        v_COMMIT INT := 10000;
+        v_TOTAL INT := 0;
+BEGIN
+        LOOP
+        delete from DIGITAL_DUP_INFO
+	where TRN_DATE < to_char((sysdate-30) ,'YYYY/MM/DD')
+        and rownum <= v_COMMIT;
+
+        v_TOTAL := v_TOTAL + SQL%rowcount;
+        dbms_output.put_line( trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted...') ;
+
+        EXIT WHEN SQL%rowcount < v_COMMIT;
+        commit;
+        END LOOP;
+        commit;
+    dbms_output.put_line( 'DIGITAL_DUP_INFO: TOTAL ' || trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted!') ;
+END;
+/
+
+
+--######################################################################
+--# SERIALNO_QUERY_COUNT  (Keep 1 month)
+--######################################################################
+select '################################################################' from dual;
+select '>>>> Timestamp: '|| to_char(sysdate,'YYYY-MM-DD HH:MI:SS') from dual;
+select '>>>> Delete Table: SERIALNO_QUERY_COUNT ' from dual;
+
+DECLARE
+        v_COMMIT INT := 10000;
+        v_TOTAL INT := 0;
+BEGIN
+        LOOP
+        delete from SERIALNO_QUERY_COUNT
+	where LAST_MODIFY_DATE < add_months(sysdate, -1)
+        and rownum <= v_COMMIT;
+
+        v_TOTAL := v_TOTAL + SQL%rowcount;
+        dbms_output.put_line( trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted...') ;
+
+        EXIT WHEN SQL%rowcount < v_COMMIT;
+        commit;
+        END LOOP;
+        commit;
+    dbms_output.put_line( 'SERIALNO_QUERY_COUNT: TOTAL ' || trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted!') ;
+END;
+/
+
+
+--######################################################################
+--# TOKEN_TEMP_DATA  (Keep 1 day)
+--######################################################################
+select '################################################################' from dual;
+select '>>>> Timestamp: '|| to_char(sysdate,'YYYY-MM-DD HH:MI:SS') from dual;
+select '>>>> Delete Table: TOKEN_TEMP_DATA' from dual;
+
+DECLARE
+        v_COMMIT INT := 10000;
+        v_TOTAL INT := 0;
+BEGIN
+        LOOP
+        delete from TOKEN_TEMP_DATA
+        where VALID_DATE< sysdate -1
+        and rownum <= v_COMMIT;
+
+        v_TOTAL := v_TOTAL + SQL%rowcount;
+        dbms_output.put_line( trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted...') ;
+
+        EXIT WHEN SQL%rowcount < v_COMMIT;
+        commit;
+        END LOOP;
+        commit;
+    dbms_output.put_line( 'TOKEN_TEMP_DATA: TOTAL ' || trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted!') ;
+END;
+/
+
+
+--######################################################################
+--# PREDOC_APPLY_RECORD  (Keep 7 day)
+--######################################################################
+select '################################################################' from dual;
+select '>>>> Timestamp: '|| to_char(sysdate,'YYYY-MM-DD HH:MI:SS') from dual;
+select '>>>> Delete Table: PREDOC_APPLY_RECORD' from dual;
+
+DECLARE
+        v_COMMIT INT := 10000;
+        v_TOTAL INT := 0;
+BEGIN
+        LOOP
+        delete from PREDOC_APPLY_RECORD
+        where CREATE_TIME< sysdate -7
+        and rownum <= v_COMMIT;
+
+        v_TOTAL := v_TOTAL + SQL%rowcount;
+        dbms_output.put_line( trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted...') ;
+
+        EXIT WHEN SQL%rowcount < v_COMMIT;
+        commit;
+        END LOOP;
+        commit;
+    dbms_output.put_line( 'PREDOC_APPLY_RECORD: TOTAL ' || trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted!') ;
+END;
+/
+
+--######################################################################
+--# SELF_BORROWING_RATE  (Keep 6 month)
+--######################################################################
+select '################################################################' from dual;
+select '>>>> Timestamp: '|| to_char(sysdate,'YYYY-MM-DD HH:MI:SS') from dual;
+select '>>>> Delete Table: SELF_BORROWING_RATE ' from dual;
+
+DECLARE
+        v_COMMIT INT := 10000;
+        v_TOTAL INT := 0;
+BEGIN
+        LOOP
+        delete from SELF_BORROWING_RATE
+	where LAST_MOD_DATE < to_char(add_months(sysdate, -6),'yyyymmdd')
+        and rownum <= v_COMMIT;
+
+        v_TOTAL := v_TOTAL + SQL%rowcount;
+        dbms_output.put_line( trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted...') ;
+
+        EXIT WHEN SQL%rowcount < v_COMMIT;
+        commit;
+        END LOOP;
+        commit;
+    dbms_output.put_line( 'SELF_BORROWING_RATE: TOTAL ' || trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted!') ;
+END;
+/
+
+--######################################################################
+--# DIGITAL_ACCT_PATCH (Keep 10 days)
+--######################################################################
+select '################################################################' from dual;
+select '>>>> Timestamp: '|| to_char(sysdate,'YYYY-MM-DD HH:MI:SS') from dual;
+select '>>>> Delete Table: DIGITAL_ACCT_PATCH' from dual;
+
+DECLARE
+        v_COMMIT INT := 10000;
+        v_TOTAL INT := 0;
+BEGIN
+        LOOP
+        delete from DIGITAL_ACCT_PATCH
+        where CREATE_TIME < SYSDATE -10
+        and rownum <= v_COMMIT;
+
+        v_TOTAL := v_TOTAL + SQL%rowcount;
+        dbms_output.put_line( trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted...') ;
+
+        EXIT WHEN SQL%rowcount < v_COMMIT;
+        commit;
+        END LOOP;
+        commit;
+    dbms_output.put_line( 'DIGITAL_ACCT_PATCH: TOTAL ' || trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted!') ;
+END;
+/
+
+--######################################################################
+--# DIGITAL_ACCT_PATCH_DETAIL (Keep 10 days)
+--######################################################################
+select '################################################################' from dual;
+select '>>>> Timestamp: '|| to_char(sysdate,'YYYY-MM-DD HH:MI:SS') from dual;
+select '>>>> Delete Table: DIGITAL_ACCT_PATCH_DETAIL' from dual;
+
+DECLARE
+        v_COMMIT INT := 10000;
+        v_TOTAL INT := 0;
+BEGIN
+        LOOP
+        delete from DIGITAL_ACCT_PATCH_DETAIL
+        where CREATE_TIME < SYSDATE -10
+        and rownum <= v_COMMIT;
+
+        v_TOTAL := v_TOTAL + SQL%rowcount;
+        dbms_output.put_line( trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted...') ;
+
+        EXIT WHEN SQL%rowcount < v_COMMIT;
+        commit;
+        END LOOP;
+        commit;
+    dbms_output.put_line( 'DIGITAL_ACCT_PATCH_DETAIL: TOTAL ' || trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted!') ;
+END;
+/
+
+--######################################################################
+--# LINE_COUPON_EXCHANGE_RECORD (Keep 3 days)
+--######################################################################
+select '################################################################' from dual;
+select '>>>> Timestamp: '|| to_char(sysdate,'YYYY-MM-DD HH:MI:SS') from dual;
+select '>>>> Delete Table: LINE_COUPON_EXCHANGE_RECORD' from dual;
+
+DECLARE
+        v_COMMIT INT := 10000;
+        v_TOTAL INT := 0;
+BEGIN
+        LOOP
+        delete from LINE_COUPON_EXCHANGE_RECORD
+        where EXCHANGE_DATE < SYSDATE -3
+        and rownum <= v_COMMIT;
+
+        v_TOTAL := v_TOTAL + SQL%rowcount;
+        dbms_output.put_line( trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted...') ;
+
+        EXIT WHEN SQL%rowcount < v_COMMIT;
+        commit;
+        END LOOP;
+        commit;
+    dbms_output.put_line( 'LINE_COUPON_EXCHANGE_RECORD: TOTAL ' || trim( to_char( v_TOTAL,'999999999999')) || ' rows deleted!') ;
+END;
+/
+
+select '#### Timestamp: '|| to_char(sysdate,'YYYY-MM-DD HH:MI:SS') from dual;
+select '#### End Running del_his_data_daily.sql' from dual;
